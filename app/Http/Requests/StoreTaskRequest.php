@@ -22,7 +22,22 @@ class StoreTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => [
+                'required',
+                'string',
+                'max:50',
+                'unique:tasks,name'
+            ],
         ];
+    }
+    public function messages()
+    {
+        return [
+            'name.required' => 'Vui lòng nhập tên nhiệm vụ.',
+            'name.string' => 'Tên nhiệm vụ phải là một chuỗi ký tự.',
+            'name.max' => 'Tên nhiệm vụ không được vượt quá :max ký tự.',
+            'name.unique' => 'Nhiệm vụ đã trùng. Vui lòng nhập khác.'
+        ];
+
     }
 }
