@@ -21,28 +21,23 @@ class TaskController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreTaskRequest $request)
     {
         $task = Task::create($request->validated());
-        return $task->toResource();
+        
+        return $task->toResource()->additional([
+            'message' => 'Tạo nhiệm vụ thành công.'
+        ]);
     }
+
 
     /**
      * Display the specified resource.
      */
     public function show(Task $task)
     {
-
         // return new TaskResource($task);
         // return TaskResource::make($task);
         return $task->toResource();
@@ -61,7 +56,11 @@ class TaskController extends Controller
      */
     public function update(UpdateTaskRequest $request, Task $task)
     {
-        //
+        $task->update($request->validated());
+
+       return $task->toResource()->additional([
+            'message' => 'Cập nhập nhiệm vụ thành công.'
+        ]);
     }
 
     /**
