@@ -56,4 +56,26 @@ class TaskTest extends TestCase
             ]
         ]);
     }
+     public function test_user_can_complete_task(): void
+    {
+        $task = Task::factory()->create(['is_completed' => false]);
+
+        $response = $this->patchJson("/api/v1/tasks/{$task->id}/complete", [
+            'is_completed' => true,
+        ]);
+
+        $response->assertOk();
+        $response->assertJson([
+            'data' => [
+                'id' => $task->id,
+                'is_completed' => true,
+            ]
+        ]);
+
+        // Kiểm tra DB thực sự đã update
+        $this->assertDatabaseHas('tasks', [
+            'id' => $task->id,
+            'is_completed' => true,
+        ]);
+    }
 }
