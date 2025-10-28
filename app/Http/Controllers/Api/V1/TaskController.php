@@ -26,7 +26,7 @@ class TaskController extends Controller
     public function store(StoreTaskRequest $request)
     {
         $task = Task::create($request->validated());
-        
+
         return $task->toResource()->additional([
             'message' => 'Tạo nhiệm vụ thành công.'
         ]);
@@ -43,13 +43,6 @@ class TaskController extends Controller
         return $task->toResource();
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Task $task)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -58,7 +51,7 @@ class TaskController extends Controller
     {
         $task->update($request->validated());
 
-       return $task->toResource()->additional([
+        return $task->toResource()->additional([
             'message' => 'Cập nhập nhiệm vụ thành công.'
         ]);
     }
@@ -69,10 +62,10 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         $task->delete();
-
-        return response()->json([
-            'message' => 'Xóa nhiệm vụ thành công.'
-        ], 200);
+        return response()->noContent();
+        // return response()->json([
+        //     'message' => 'Xóa nhiệm vụ thành công.'
+        // ], 200);
     }
 
 }
